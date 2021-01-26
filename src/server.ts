@@ -110,7 +110,9 @@ export class Server {
       this.plotsContainer[id].pending = false;
 
       res.end(JSON.stringify(temporaryPlots));
-      this.close();
+      setTimeout(() => {
+        this.close();
+      }, 3000);
       return true; // request successfully server
     }
     return false; // request not served
