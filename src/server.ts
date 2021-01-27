@@ -112,8 +112,8 @@ export class Server {
       res.end(JSON.stringify(temporaryPlots));
       setTimeout(() => {
         this.close();
+        return true; // request successfully server
       }, 3000);
-      return true; // request successfully server
     }
     return false; // request not served
   }
@@ -168,10 +168,8 @@ export class Server {
    * and all plots were opened
    */
   private close() {
-    const pending = Object.values(this.plotsContainer)
-      .reduce((a, b) => a || b.pending, false);
-    const opened = Object.values(this.plotsContainer)
-      .reduce((a, b) => a && b.opened, true);
+    const pending = Object.values(this.plotsContainer).reduce((a, b) => a || b.pending, false);
+    const opened = Object.values(this.plotsContainer).reduce((a, b) => a && b.opened, true);
 
     if (this.instance && !pending && opened) {
       this.clean();
